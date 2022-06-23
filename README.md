@@ -1,5 +1,5 @@
 # Dotfiles
 
-## The Repository to storade my dotfiles
+## The Repository to store my dotfiles
 
 #### Here is now only nvim config file.
