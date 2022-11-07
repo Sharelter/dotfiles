@@ -133,8 +133,6 @@ tnoremap <Esc> <C-\><C-n>
 " Vim-Plug section start
 call plug#begin()
 
-Plug 'lilydjwg/fcitx.vim'
-
 Plug 'connorholyday/vim-snazzy'
 
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'} " Instantly preview Markdown files
