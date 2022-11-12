@@ -5,6 +5,13 @@
 " borrow something from theniceboy: https://github.com/theniceboy/nvim
 " ========================================================
 
+" ==================== Auto load for first time uses ====================
+if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
+	silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 " ==================== Editor behavior ====================
 set cursorline
 set number relativenumber
@@ -13,6 +20,7 @@ set encoding=utf8
 set notimeout
 set ttimeoutlen=100
 set viewoptions=cursor,folds
+set showtabline=2
 
 " Vim autoindent
 filetype plugin indent on
@@ -133,11 +141,11 @@ tnoremap <Esc> <C-\><C-n>
 " Vim-Plug section start
 call plug#begin()
 
-Plug 'lilydjwg/fcitx.vim'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 Plug 'connorholyday/vim-snazzy'
 
-Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'} " Instantly preview Markdown files
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
 Plug 'junegunn/goyo.vim' " Distraction-free writing in Vim.
 
@@ -191,7 +199,10 @@ require("indent_blankline").setup {
 EOF
 
 " ==================== vim-snazzy ====================
-colorscheme snazzy
+colorscheme tokyonight-moon
+
+" ==================== vim-snazzy ====================
+" colorscheme snazzy
 
 " ==================== Rnvimr ====================
 tnoremap <silent> tr <C-\><C-n>:RnvimrResize<CR>
@@ -215,18 +226,16 @@ let g:airline_theme='cool'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#enabled = 0 " Disable the trailing prompt on the bottom-right corner
 
-" ==================== vim-instant-makrdown-preview ====================
-nnoremap <silent> mv :InstantMarkdownPreview<CR>
-nnoremap <silent> mt :InstantMarkdownStop<CR>
-let g:instant_markdown_slow = 0
-let g:instant_markdown_autostart = 0
-" let g:instant_markdown_open_to_the_world = 1
-" let g:instant_markdown_allow_unsafe_content = 1
-" let g:instant_markdown_allow_external_content = 0
-" let g:instant_markdown_mathjax = 1
-let g:instant_markdown_autoscroll = 1
-let g:instant_markdown_browser = "firefox --new-window"
+" ==================== markdown-preview.nvim ====================
+nmap mt <Plug>MarkdownPreviewToggle
 
 " ==================== tabline.nvim ====================
 lua require'tabline.setup'.setup()
+
+" ==================== fcitx5-autoswitch ==================== 
+let fcitx5state=system("fcitx5-remote")
+autocmd InsertLeave * :silent let fcitx5state=system("fcitx5-remote")[0] | silent !fcitx5-remote -c
+" 退出插入模式时禁用输入法，并保存状态
+autocmd InsertEnter * :silent if fcitx5state == 2 | call system("fcitx5-remote -o") | endif 
+" 2 表示之前状态打开了输入法，则进入插入模式时启动输入法
 
