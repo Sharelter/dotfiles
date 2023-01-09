@@ -143,7 +143,7 @@ call plug#begin()
 
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
-Plug 'connorholyday/vim-snazzy'
+" Plug 'connorholyday/vim-snazzy'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
@@ -198,13 +198,23 @@ require("indent_blankline").setup {
 }
 EOF
 
-" ==================== vim-snazzy ====================
-colorscheme tokyonight-moon
+" ==================== tokyonight.nvim ====================
+"lua << EOF
+"require("tokyonight").setup({
+"  transparent = true, -- Enable this to disable setting the background color
+"})
+"EOF
+
+colorscheme tokyonight-storm
 
 " ==================== vim-snazzy ====================
 " colorscheme snazzy
 
 " ==================== Rnvimr ====================
+" Install requirement packages:
+" ArchLinux install all requirements is extremely convenient 
+" yay -S ranger python-pynvim ueberzug
+
 tnoremap <silent> tr <C-\><C-n>:RnvimrResize<CR>
 nnoremap <silent> tt :RnvimrToggle<CR>
 autocmd VimEnter * RnvimrStartBackground
